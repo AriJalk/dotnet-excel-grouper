@@ -2,6 +2,7 @@
 using ExcelGrouper.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ExcelGrouper.DataStructures;
 
 namespace ExcelGrouper
 {
@@ -13,24 +14,31 @@ namespace ExcelGrouper
 		{
 			ExcelConfiguration? configuration = null;
 #if DEBUG
-			string path = "D:/Users/Ariel/Downloads/Book1.xlsx";
-			configuration = new ExcelConfiguration(path, "Sheet1", "A1:C9", ["Test1", "Test2", "Test3"], 2);
+			string path = "D:/Users/Ariel/Downloads/Book1.json";
+			configuration = FileHandler.GetExcelConfiguration(path);
 #else
 			if (string.IsNullOrEmpty(args[0]))
 			{
 				return;
 			}
-			configuration = ConfigurationReader.GetConfiguration(args[0]);
+			configuration = FileHandler.GetExcelConfiguration(args[0]);
 #endif
 
 
-			if (configuration == null || String.IsNullOrEmpty(configuration.WorkbookPath))
+			if (configuration == null)
 			{
 				return;
 			}
 
-			ExcelHandler handler = new ExcelHandler(configuration);
-			handler.ProcessWorkbook();
+
+			ExcelContext? context = FileHandler.GetExcelContext(configuration);
+			if (context == null)
+			{
+				return;
+			}
+
+			string output = WorkbookGrouper.ProcessWorkbook(context);
+			FileHandler.WriteFile(configuration.PathWithoutExtension + ".txt", output);
 		}
 	}
 }

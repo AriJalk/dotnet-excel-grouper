@@ -9,7 +9,15 @@ namespace ExcelGrouper
 {
 	internal class ExcelConfiguration
 	{
-		public string WorkbookPath { get; set; }
+		public string FileName { get; set; } = "";
+		public string Directory { get; set; } = "";
+		public string PathWithoutExtension
+		{
+			get
+			{
+				return Path.Combine(Directory, FileName);
+			}
+		}
 		public string WorksheetName { get; set; }
 		public string CellRange { get; set; }
 		public IEnumerable<string> Headers { get; set; }
@@ -17,14 +25,5 @@ namespace ExcelGrouper
 
 
 		public ExcelConfiguration() { }
-
-		public ExcelConfiguration(string workbookPath, string worksheetName, string cellRange, IEnumerable<string> headers, float sensitivity)
-		{
-			WorkbookPath = workbookPath;
-			WorksheetName = worksheetName;
-			CellRange = cellRange;
-			Headers = headers;
-			Sensitivity = Math.Abs(sensitivity);
-		}
 	}
 }

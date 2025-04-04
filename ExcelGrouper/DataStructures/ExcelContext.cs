@@ -10,15 +10,13 @@ namespace ExcelGrouper.DataStructures
 	internal class ExcelContext
 	{
 		public XLWorkbook Workbook { get; }
+		public ExcelConfiguration Configuration { get; }
 
-		public ExcelContext(XLWorkbook workbook)
-		{
-			Workbook = workbook;
-		}
 
-		public ExcelContext(string path)
+		public ExcelContext(ExcelConfiguration configuration)
 		{
-			Workbook = new XLWorkbook(path);
+			Workbook = new XLWorkbook(configuration.PathWithoutExtension + ".xlsx");
+			Configuration = configuration;
 		}
 	}
 }

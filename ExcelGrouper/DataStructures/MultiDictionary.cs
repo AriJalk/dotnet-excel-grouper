@@ -9,22 +9,24 @@ namespace ExcelGrouper.DataStructures
 {
 	internal class MultiDictionary
 	{
+		private Dictionary<float, object> _multiDiciontary { get; set; }
+		private float _sensitivity;
 		private int _groupIndex;
-		Dictionary<float, object> MultiDiciontary { get; set; }
 
 
-		public MultiDictionary()
+		public MultiDictionary(float sensitivity)
 		{
-			MultiDiciontary = new Dictionary<float, object>();
+			_multiDiciontary = new Dictionary<float, object>();
+			_sensitivity = sensitivity;
 			_groupIndex = 1;
 		}
 
-		public int GetGroupId(List<float> values, float sensitivity)
+		public int GetGroupId(List<float> values)
 		{
-			Dictionary<float, object> currentLevel = MultiDiciontary;
+			Dictionary<float, object> currentLevel = _multiDiciontary;
 			for (int i = 0; i < values.Count - 1; i++)
 			{
-				if (GetDictionaryInRange(currentLevel, values[i], sensitivity) is Dictionary<float, object> dict)
+				if (GetDictionaryInRange(currentLevel, values[i]) is Dictionary<float, object> dict)
 				{
 					currentLevel = dict;
 				}
@@ -35,7 +37,7 @@ namespace ExcelGrouper.DataStructures
 				}
 			}
 			float last = values.Last();
-			if (GetDictionaryInRange(currentLevel, last, sensitivity) is int groupId && groupId != 0)
+			if (GetDictionaryInRange(currentLevel, last) is int groupId && groupId != 0)
 			{
 				return groupId;
 			}
@@ -48,9 +50,9 @@ namespace ExcelGrouper.DataStructures
 		}
 
 
-		private static object? GetDictionaryInRange(Dictionary<float, object> dict, float value, float sensitivity)
+		private object? GetDictionaryInRange(Dictionary<float, object> dict, float value)
 		{
-			for (int i = 0; i <= sensitivity; i++)
+			for (int i = 0; i <= _sensitivity; i++)
 			{
 				if (dict.ContainsKey(value + i))
 				{
