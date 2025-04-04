@@ -13,32 +13,27 @@ namespace ExcelGrouper
 		static void Main(string[] args)
 		{
 			ExcelConfiguration? configuration = null;
+			string path;
 #if DEBUG
-			string path = "D:/Users/Ariel/Downloads/Book1.json";
-			configuration = FileHandler.GetExcelConfiguration(path);
+			path = "D:/Users/Ariel/Downloads/Book1.json";
 #else
-			if (string.IsNullOrEmpty(args[0]))
-			{
-				return;
-			}
-			configuration = FileHandler.GetExcelConfiguration(args[0]);
+			path = args[0];
 #endif
-
-
-			if (configuration == null)
+			if (string.IsNullOrEmpty(path) || !string.Equals(Path.GetExtension(path), ".json"))
 			{
+				Console.WriteLine("Please use a json file as parameter");
 				return;
 			}
 
-
+			configuration = FileHandler.GetExcelConfiguration(path);
 			ExcelContext? context = FileHandler.GetExcelContext(configuration);
 			if (context == null)
 			{
 				return;
 			}
 
-			string output = WorkbookGrouper.ProcessWorkbook(context);
-			FileHandler.WriteFile(configuration.PathWithoutExtension + ".txt", output);
+			string output = WorkbookHandler.ProcessWorkbook(context);
+			FileHandler.WriteFile($"{configuration.PathWithoutExtension}_{configuration.WorksheetName}.txt", output);
 		}
 	}
 }

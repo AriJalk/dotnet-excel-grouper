@@ -11,12 +11,21 @@ namespace ExcelGrouper.DataStructures
 	{
 		public XLWorkbook Workbook { get; }
 		public ExcelConfiguration Configuration { get; }
+		
+		public ExcelContext(XLWorkbook workbook, ExcelConfiguration configuration)
+		{
+			Workbook = workbook;
+			Configuration = configuration;
+		}
 
-
+		// Load context from file specified in configuration
 		public ExcelContext(ExcelConfiguration configuration)
 		{
-			Workbook = new XLWorkbook(configuration.PathWithoutExtension + ".xlsx");
+			string path = configuration.PathWithoutExtension + ".xlsx";
+			Console.WriteLine($"Opening file: {path}");
+			Workbook = new XLWorkbook(path);
 			Configuration = configuration;
+			Console.WriteLine($"File opened");
 		}
 	}
 }

@@ -19,7 +19,7 @@ namespace ExcelGrouper
 			}
 		}
 		public string WorksheetName { get; set; }
-		public string CellRange { get; set; }
+		public string CellsRange { get; set; }
 		public IEnumerable<string> Headers { get; set; }
 		public float Sensitivity { get; set; }
 

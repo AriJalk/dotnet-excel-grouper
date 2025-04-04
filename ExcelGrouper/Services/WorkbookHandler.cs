@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ExcelGrouper
 {
-	internal class WorkbookGrouper
+	internal class WorkbookHandler
 	{
 
 		public static string ProcessWorkbook(ExcelContext context)
@@ -25,7 +25,7 @@ namespace ExcelGrouper
 			wb.TryGetWorksheet(configuration.WorksheetName, out IXLWorksheet worksheet);
 			if (worksheet != null)
 			{
-				output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellRange), configuration.Headers, configuration.Sensitivity);
+				output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Sensitivity);
 			}
 			return output;
 		}
