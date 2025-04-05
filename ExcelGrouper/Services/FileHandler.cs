@@ -1,4 +1,6 @@
-﻿using ExcelGrouper.DataStructures;
+﻿/// Handles file loading/writing
+
+using ExcelGrouper.DataStructures;
 using System.Text.Json;
 
 
@@ -29,14 +31,18 @@ namespace ExcelGrouper.Services
 						PropertyNameCaseInsensitive = true,
 					};
 					configuration = JsonSerializer.Deserialize<ExcelConfiguration>(json, option);
-					configuration.FileName = Path.GetFileNameWithoutExtension(path);
-					configuration.Directory = Path.GetDirectoryName(path);
+					if (configuration != null)
+					{
+						configuration.FileName = Path.GetFileNameWithoutExtension(path);
+						configuration.Directory = Path.GetDirectoryName(path);
+					}
 				}
 			}
 			return configuration;
 
 		}
 
+		// Safer method to get context with nullable option if there's a problem
 		public static ExcelContext? GetExcelContext(ExcelConfiguration configuration)
 		{
 			string path = configuration.PathWithoutExtension + ".xlsx";

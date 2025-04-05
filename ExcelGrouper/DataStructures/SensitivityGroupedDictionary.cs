@@ -1,4 +1,5 @@
 ﻿/// Stores List of values grouped by sensitivity distance of all required values
+
 namespace ExcelGrouper.DataStructures
 {
 	public class SensitivityGroupedDictionary
@@ -22,6 +23,7 @@ namespace ExcelGrouper.DataStructures
 			{
 				if (GetDictionaryInRange(currentLevel, values[i]) is Dictionary<float, object> dict)
 				{
+					// Progress to matching dictionary
 					currentLevel = dict;
 				}
 				else
