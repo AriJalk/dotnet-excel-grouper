@@ -22,7 +22,7 @@ namespace ExcelGrouper.Services
 			// Find header columns
 			for (int col = 1; col <= range.ColumnCount(); col++)
 			{
-				if (String.Equals(headerRow.Cell(col).Value.ToString(), headerQueue.Peek()))
+				if (String.Equals(headerRow.Cell(col).GetValue<string>(), headerQueue.Peek()))
 				{
 					columns.Add(col);
 					headerQueue.Dequeue();
@@ -38,7 +38,7 @@ namespace ExcelGrouper.Services
 				IXLRangeRow rangeRow = range.Row(row);
 				foreach (int column in columns)
 				{
-					values.Add(float.Parse(rangeRow.Cell(column).Value.ToString()));
+					values.Add(rangeRow.Cell(column).GetValue<float>());
 				}
 				Console.WriteLine($"Row {row - 1}");
 				output += multiDictionary.GetGroupId(values) + "\n";

@@ -46,11 +46,30 @@ namespace ExcelGrouper.Services
 		public static ExcelContext? GetExcelContext(ExcelConfiguration configuration)
 		{
 			string path = configuration.PathWithoutExtension + ".xlsx";
-			if (File.Exists(path))
+			if (File.Exists(path) && !IsFileLocked(path))
 			{
 				return new ExcelContext(configuration);
 			}
 			return null;
+		}
+
+		private static bool IsFileLocked(string path)
+		{
+			try
+			{
+				using (FileStream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
+				{
+					stream.Close();
+				}
+			}
+			catch (IOException er)
+			{
+				Console.WriteLine(er.Message);
+				return true;
+			}
+
+			//file is not locked
+			return false;
 		}
 	}
 }
