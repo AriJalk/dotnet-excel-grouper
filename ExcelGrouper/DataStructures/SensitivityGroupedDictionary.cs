@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿/// Stores List of values grouped by sensitivity distance of all required values
 namespace ExcelGrouper.DataStructures
 {
-	internal class MultiDictionary
+	public class SensitivityGroupedDictionary
 	{
 		private Dictionary<float, object> _multiDiciontary { get; set; }
-		private float _sensitivity;
+		private int _sensitivity;
 		private int _groupIndex;
 
 
-		public MultiDictionary(float sensitivity)
+		public SensitivityGroupedDictionary(int sensitivity)
 		{
 			_multiDiciontary = new Dictionary<float, object>();
 			_sensitivity = sensitivity;
@@ -32,6 +26,7 @@ namespace ExcelGrouper.DataStructures
 				}
 				else
 				{
+					// Initialize new dictionary and advance to it
 					currentLevel[values[i]] = new Dictionary<float, object>();
 					currentLevel = currentLevel[values[i]] as Dictionary<float, object>;
 				}

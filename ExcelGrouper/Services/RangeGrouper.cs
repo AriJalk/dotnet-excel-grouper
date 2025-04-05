@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 
 namespace ExcelGrouper.Services
 {
-	internal class RangeGrouper
+	public class RangeGrouper
 	{
 
-		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, float sensitivity)
+		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, int sensitivity)
 		{
+			if (headers.Count() > range.ColumnCount())
+			{
+				return "More headers than columns";
+			}
 			List<int> columns = new List<int>();
 			string output = "";
 			Queue<string> headerQueue = new Queue<string>(headers);
-			MultiDictionary multiDictionary = new MultiDictionary(sensitivity);
+			SensitivityGroupedDictionary multiDictionary = new SensitivityGroupedDictionary(sensitivity);
 			IXLRangeRow headerRow = range.Row(1);
 			// Find header columns
 			for (int col = 1; col <= range.ColumnCount(); col++)

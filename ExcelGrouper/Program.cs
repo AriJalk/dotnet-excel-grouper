@@ -26,9 +26,15 @@ namespace ExcelGrouper
 			}
 
 			configuration = FileHandler.GetExcelConfiguration(path);
+			if (configuration == null)
+			{
+				Console.WriteLine("Invalid configuration");
+				return;
+			}
 			ExcelContext? context = FileHandler.GetExcelContext(configuration);
 			if (context == null)
 			{
+				Console.WriteLine("Can't open excel file");
 				return;
 			}
 
