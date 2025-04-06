@@ -24,9 +24,9 @@ The program:
 
 ---
 
-## ⚙️ Efficient Grouping with Sensitivity Dictionary
+## ⚙️ Efficient Grouping with Threshold Dictionary
 
-Internally, ExcelGrouper uses a structure called `SensitivityGroupedDictionary` (formerly `MultiDictionary`) to assign group IDs.
+Internally, ExcelGrouper uses a structure called `ThresholdGroupedDictionary` to assign group IDs.
 
 - It compares incoming rows to already grouped rows.
 - If a match is found **within the threshold** across all specified headers, it assigns the same group ID.
