@@ -22,7 +22,7 @@ namespace Tests
 		[Fact]
 		public void ValuesInRange_ReturnsSameGroup()
 		{
-			int sensitivity = 2;
+			int threshold = 2;
 			// Arrange
 			object[,] data = new object[,]
 			{
@@ -39,7 +39,7 @@ namespace Tests
 
 			// Act
 			string expected = "1\n1\n1\n1\n";
-			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], sensitivity);
+			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], threshold);
 
 			// Assert
 			Assert.Equal(expected, actual);
@@ -48,7 +48,7 @@ namespace Tests
 		[Fact]
 		public void WhenValuesAreNotInRange_ItReturnsDifferentGroups()
 		{
-			int sensitivity = 0;
+			int threshold = 0;
 			// Arrange
 			object[,] data = new object[,]
 			{
@@ -65,7 +65,7 @@ namespace Tests
 
 			// Act
 			string expected = "1\n2\n3\n4\n";
-			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], sensitivity);
+			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], threshold);
 
 			// Assert
 			Assert.Equal(expected, actual);

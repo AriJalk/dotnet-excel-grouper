@@ -21,7 +21,7 @@ namespace ExcelGrouper
 			wb.TryGetWorksheet(configuration.WorksheetName, out IXLWorksheet worksheet);
 			if (worksheet != null)
 			{
-				output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Sensitivity);
+				output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Threshold);
 			}
 			return output;
 		}

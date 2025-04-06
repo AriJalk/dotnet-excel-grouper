@@ -1,4 +1,4 @@
-﻿/// Converts range to data usable by the sensitivity grouper
+﻿/// Converts range to data usable by the threshold grouper
 
 using ClosedXML.Excel;
 using ExcelGrouper.DataStructures;
@@ -8,7 +8,7 @@ namespace ExcelGrouper.Services
 	public class RangeGrouper
 	{
 
-		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, int sensitivity)
+		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, int threshold)
 		{
 			if (headers.Count() > range.ColumnCount())
 			{
@@ -17,7 +17,7 @@ namespace ExcelGrouper.Services
 			List<int> columns = new List<int>();
 			string output = "";
 			Queue<string> headerQueue = new Queue<string>(headers);
-			SensitivityGroupedDictionary multiDictionary = new SensitivityGroupedDictionary(sensitivity);
+			ThresholdGroupedDictionary multiDictionary = new ThresholdGroupedDictionary(threshold);
 			IXLRangeRow headerRow = range.Row(1);
 			// Find header columns
 			for (int col = 1; col <= range.ColumnCount(); col++)

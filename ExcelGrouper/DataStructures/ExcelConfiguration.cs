@@ -18,7 +18,7 @@ namespace ExcelGrouper
 		public string WorksheetName { get; set; }
 		public string CellsRange { get; set; }
 		public IEnumerable<string> Headers { get; set; }
-		public int Sensitivity { get; set; }
+		public int Threshold { get; set; }
 
 
 		public ExcelConfiguration() { }

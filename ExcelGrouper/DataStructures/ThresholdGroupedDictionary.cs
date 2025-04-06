@@ -1,18 +1,18 @@
-﻿/// Stores List of values grouped by sensitivity distance of all required values
+﻿/// Stores List of values grouped by threshold distance of all required values
 
 namespace ExcelGrouper.DataStructures
 {
-	public class SensitivityGroupedDictionary
+	public class ThresholdGroupedDictionary
 	{
 		private Dictionary<float, object> _multiDiciontary { get; set; }
-		private int _sensitivity;
+		private int _threshold;
 		private int _groupIndex;
 
 
-		public SensitivityGroupedDictionary(int sensitivity)
+		public ThresholdGroupedDictionary(int threshold)
 		{
 			_multiDiciontary = new Dictionary<float, object>();
-			_sensitivity = sensitivity;
+			_threshold = Math.Abs(threshold);
 			_groupIndex = 1;
 		}
 
@@ -49,7 +49,7 @@ namespace ExcelGrouper.DataStructures
 
 		private object? GetDictionaryInRange(Dictionary<float, object> dict, float value)
 		{
-			for (int i = 0; i <= _sensitivity; i++)
+			for (int i = 0; i <= _threshold; i++)
 			{
 				if (dict.ContainsKey(value + i))
 				{
