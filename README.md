@@ -41,7 +41,7 @@ Create a `.json` file with the same name as your Excel file.
 - `"worksheetName"` — Name of the worksheet to use
 - `"cellsRange"` — The range to analyze (including the header row)
 - `"headers"` — List of columns to base grouping on (must match header row text)
-- `"threshold"` — Whole number (positive or negative doesn't matter); defines how far apart values can be to still be grouped together
+- `"threshold"` — Whole number (positive or negative doesn't matter, the value is checked both for positive and negative); defines how far apart values can be to still be grouped together
 
 ---
 
@@ -89,7 +89,6 @@ Example output (`data_Sheet1.txt`):
 ## 📌 Notes
 
 - The Excel file **must be closed** when running the tool
-- Floating point precision is rough — designed for quick grouping (up to ~3 decimal digits)
 - Grouping is based on absolute difference in values vs the threshold
 - Uses [ClosedXML](https://github.com/ClosedXML/ClosedXML) as a third-party library under the MIT license (already included)
 
