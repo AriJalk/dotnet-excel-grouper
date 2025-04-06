@@ -40,7 +40,7 @@ Create a `.json` file with the same name as your Excel file.
 ### Field Descriptions:
 - `"worksheetName"` — Name of the worksheet to use
 - `"cellsRange"` — The range to analyze (including the header row)
-- `"headers"` — List of columns to base grouping on (must match header row text)
+- `"headers"` — List of columns to base grouping on (must match header row text and order)
 - `"threshold"` — Whole number (positive or negative doesn't matter, the value is checked both for positive and negative); defines how far apart values can be to still be grouped together
 
 ---
