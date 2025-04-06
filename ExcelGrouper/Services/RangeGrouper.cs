@@ -2,6 +2,7 @@
 
 using ClosedXML.Excel;
 using ExcelGrouper.DataStructures;
+using System.Text;
 
 namespace ExcelGrouper.Services
 {
@@ -15,7 +16,7 @@ namespace ExcelGrouper.Services
 				return "More headers than columns";
 			}
 			List<int> columns = new List<int>();
-			string output = "";
+			StringBuilder outputBuilder = new StringBuilder();
 			Queue<string> headerQueue = new Queue<string>(headers);
 			ThresholdGroupedDictionary multiDictionary = new ThresholdGroupedDictionary(threshold);
 			IXLRangeRow headerRow = range.Row(1);
@@ -41,9 +42,9 @@ namespace ExcelGrouper.Services
 					values.Add(rangeRow.Cell(column).GetValue<float>());
 				}
 				Console.WriteLine($"Row {row - 1}");
-				output += multiDictionary.GetGroupId(values) + "\n";
+				outputBuilder.AppendLine(multiDictionary.GetGroupId(values).ToString());
 			}
-			return output;
+			return outputBuilder.ToString();
 		}
 
 	}

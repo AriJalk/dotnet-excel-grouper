@@ -38,7 +38,7 @@ namespace Tests
 			AssignTable(data, range);
 
 			// Act
-			string expected = "1\n1\n1\n1\n";
+			string expected = "1\r\n1\r\n1\r\n1\r\n";
 			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], threshold);
 
 			// Assert
@@ -64,7 +64,7 @@ namespace Tests
 			AssignTable(data, range);
 
 			// Act
-			string expected = "1\n2\n3\n4\n";
+			string expected = "1\r\n2\r\n3\r\n4\r\n";
 			string actual = RangeGrouper.GetGroupsFromRange(range, ["Test1", "Test2", "Test3", "Test4"], threshold);
 
 			// Assert

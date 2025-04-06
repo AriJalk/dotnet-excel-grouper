@@ -24,9 +24,29 @@ The program:
 
 ---
 
-## 🧾 JSON Configuration Template
+## ⚙️ Efficient Grouping with Sensitivity Dictionary
 
-Create a `.json` file with the same name as your Excel file.
+Internally, ExcelGrouper uses a structure called `SensitivityGroupedDictionary` (formerly `MultiDictionary`) to assign group IDs.
+
+- It compares incoming rows to already grouped rows.
+- If a match is found **within the threshold** across all specified headers, it assigns the same group ID.
+- If not, it creates a new group.
+
+### 🔍 Why It’s Fast
+
+- Uses **hash-based mapping** to manage groups.
+- Scales efficiently regardless of how many columns you select (headers).
+- Quick lookup avoids expensive full comparisons for each new row.
+
+This structure ensures performance stays smooth even with over 100k of rows.
+
+---
+
+
+
+## 🚀 Usage
+
+Create a `.json` file with the same name as your Excel file with the following template.
 
 ```json
 {
@@ -44,8 +64,6 @@ Create a `.json` file with the same name as your Excel file.
 - `"threshold"` — Whole number (positive or negative doesn't matter, the value is checked both for positive and negative); defines how far apart values can be to still be grouped together
 
 ---
-
-## 🚀 Usage
 
 ⚠️ In **both methods below**, the `.xlsx` and `.json` files must:
 - Be in the **same folder**
