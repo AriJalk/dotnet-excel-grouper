@@ -4,24 +4,25 @@ namespace ExcelGrouper.DataStructures
 {
 	public class ThresholdGroupedDictionary
 	{
-		private Dictionary<float, object> _multiDiciontary { get; set; }
+		private Dictionary<int, object> _multiDiciontary { get; set; }
 		private int _threshold;
 		private int _groupIndex;
 
 
 		public ThresholdGroupedDictionary(int threshold)
 		{
-			_multiDiciontary = new Dictionary<float, object>();
+			_multiDiciontary = new Dictionary<int, object>();
 			_threshold = Math.Abs(threshold);
 			_groupIndex = 1;
 		}
 
 		public int GetGroupId(List<float> values)
 		{
-			Dictionary<float, object> currentLevel = _multiDiciontary;
+			Dictionary<int, object> currentLevel = _multiDiciontary;
 			for (int i = 0; i < values.Count - 1; i++)
 			{
-				if (GetDictionaryInRange(currentLevel, values[i]) is Dictionary<float, object> dict)
+				int roundedValue = (int)MathF.Round(values[i]);
+				if (GetDictionaryInRange(currentLevel, roundedValue) is Dictionary<int, object> dict)
 				{
 					// Progress to matching dictionary
 					currentLevel = dict;
@@ -29,25 +30,25 @@ namespace ExcelGrouper.DataStructures
 				else
 				{
 					// Initialize new dictionary and advance to it
-					currentLevel[values[i]] = new Dictionary<float, object>();
-					currentLevel = currentLevel[values[i]] as Dictionary<float, object>;
+					currentLevel[roundedValue] = new Dictionary<int, object>();
+					currentLevel = currentLevel[roundedValue] as Dictionary<int, object>;
 				}
 			}
-			float last = values.Last();
-			if (GetDictionaryInRange(currentLevel, last) is int groupId && groupId != 0)
+			int lastRoundedValue = (int)MathF.Round(values.Last());
+			if (GetDictionaryInRange(currentLevel, lastRoundedValue) is int groupId && groupId != 0)
 			{
 				return groupId;
 			}
 			else
 			{
-				currentLevel[last] = _groupIndex;
+				currentLevel[lastRoundedValue] = _groupIndex;
 				_groupIndex += 1;
 				return _groupIndex - 1;
 			}
 		}
 
 
-		private object? GetDictionaryInRange(Dictionary<float, object> dict, float value)
+		private object? GetDictionaryInRange(Dictionary<int, object> dict, int value)
 		{
 			for (int i = 0; i <= _threshold; i++)
 			{
