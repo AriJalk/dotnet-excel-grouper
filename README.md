@@ -61,7 +61,7 @@ Create a `.json` file with the same name as your Excel file with the following t
 - `"worksheetName"` — Name of the worksheet to use
 - `"cellsRange"` — The range to analyze (including the header row)
 - `"headers"` — List of columns to base grouping on (must match header row text and order)
-- `"threshold"` — Whole number (positive or negative doesn't matter, the value is checked both for positive and negative); defines how far apart values can be to still be grouped together
+- `"threshold"` — Whole number (positive or negative doesn't matter, the value is checked both for ascending and descending); defines how far apart values can be to still be grouped together
 
 ---
 
@@ -104,11 +104,21 @@ Example output (`data_Sheet1.txt`):
 
 ---
 
+---
+
+
 ## 📌 Notes
 
 - The Excel file **must be closed** when running the tool
-- Grouping is based on absolute difference in values vs the threshold
+- Floating point values are rounded to nearest whole number, and then the whole number is checked up to the threshold (A value of 3.6 with threshold of 2 would be rounded to 4 and then would be compared ascending and descending 4->5>6 or 4->3->2).
 - Uses [ClosedXML](https://github.com/ClosedXML/ClosedXML) as a third-party library under the MIT license (already included)
+
+
+### 🧠 Background & Motivation
+
+ExcelGrouper was built in a few days — the core functionality came together in a single focused, followed by a couple of days of some polishing and testing.
+
+It was created to solve a real-world need where Excel’s built-in tools couldn’t perform fast, rough grouping of rows based on numeric similarity across multiple columns. Rather than rely on complex formulas or tedious manual work, this tool automates the process and delivers results in seconds.
 
 ---
 
