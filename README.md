@@ -116,7 +116,7 @@ Example output (`data_Sheet1.txt`):
 
 ### 🧠 Background & Motivation
 
-ExcelGrouper was built in a few days — the core functionality came together in a single focused, followed by a couple of days of some polishing and testing.
+ExcelGrouper was built in a few days — the core functionality came together in a single focused day, followed by a couple of days of some polishing and testing.
 
 It was created to solve a real-world need where Excel’s built-in tools couldn’t perform fast, rough grouping of rows based on numeric similarity across multiple columns. Rather than rely on complex formulas or tedious manual work, this tool automates the process and delivers results in seconds.
 
@@ -137,7 +137,7 @@ It was created to solve a real-world need where Excel’s built-in tools couldn�
 ```
 
 ### Then:
-- Run the program or drag the `.json` file to the `.exe`
+- Run the program with the `.json` file path as parameter, or drag the `.json` file to the `.exe`
 - Output: `results_Sheet1.txt` with group IDs ready to paste back into Excel
 
 ---
