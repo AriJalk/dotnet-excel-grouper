@@ -1,6 +1,6 @@
 # ExcelGrouper
 
-**ExcelGrouper** is a lightweight command-line tool that processes Excel files and assigns group IDs to rows based on numeric similarity in selected columns. It’s useful for fast, rough grouping based on configurable thresholds.
+**ExcelGrouper** is a lightweight command-line tool built in .NET9 that processes Excel files and assigns group IDs to rows based on numeric similarity in selected columns. It’s useful for fast, rough grouping based on configurable thresholds.
 
 ---
 
