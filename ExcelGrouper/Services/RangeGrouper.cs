@@ -4,6 +4,7 @@ using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.InkML;
 using ExcelGrouper.DataStructures;
+using System.Collections.Concurrent;
 using System.Text;
 
 namespace ExcelGrouper.Services
@@ -66,21 +67,28 @@ namespace ExcelGrouper.Services
 			string[] strings = new string[range.RowCount() - 1];
 			List<int> columns = GetColumns(range, headers);
 			DateTime startTime = DateTime.Now;
-			Parallel.For(2, range.RowCount() + 1, row =>
+
+			var partitioner = Partitioner.Create(2, range.RowCount() + 1);
+
+
+			Parallel.ForEach(partitioner, rowRange =>
 			{
-				List<float> values = new List<float>();
-				IXLRangeRow rangeRow = range.Row(row);
-				foreach (int column in columns)
+				for(int row = rowRange.Item1; row < rowRange.Item2; row++)
 				{
-					values.Add(rangeRow.Cell(column).GetValue<float>());
+					List<float> values = new List<float>();
+					IXLRangeRow rangeRow = range.Row(row);
+					foreach (int column in columns)
+					{
+						values.Add(rangeRow.Cell(column).GetValue<float>());
+					}
+					//Console.WriteLine($"Row {row - 1}");
+					string groupString = "";
+					lock (dictLock)
+					{
+						groupString = multiDictionary.GetGroupId(values).ToString();
+					}
+					strings[row - 2] = groupString;
 				}
-				//Console.WriteLine($"Row {row - 1}");
-				string groupString = "";
-				lock (dictLock)
-				{
-					groupString = multiDictionary.GetGroupId(values).ToString();
-				}
-				strings[row - 2] = groupString;
 			});
 
 			StringBuilder outputBuilder = new StringBuilder();

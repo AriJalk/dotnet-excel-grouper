@@ -45,8 +45,7 @@ namespace ExcelGrouper
 			ExcelConfiguration? configuration = null;
 			string path;
 #if DEBUG
-			path = "D:/Users/Ariel/Downloads/חישוב פירמידות.json";
-			//path = "D:/Users/Ariel/Downloads/Book1.json";
+			path = "D:/Users/Ariel/Downloads/Book1.json";
 #else
 			path = args[0];
 #endif

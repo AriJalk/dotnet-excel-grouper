@@ -13,7 +13,7 @@ namespace Tests
 			List<float> group2 = [1, 1, 1, 3];
 			List<float> group3 = [1, 1, 2, 3];
 			List<float> group4 = [-1, -1, 2, 3];
-			ThresholdGroupedDictionary dictionary = new ThresholdGroupedDictionary(threshold);
+			ThresholdGroupedDictionary dictionary = new ThresholdGroupedDictionary(threshold, 0);
 
 			//Act
 			HashSet<int> groupIdSets = new HashSet<int>() { dictionary.GetGroupId(group1), dictionary.GetGroupId(group2), dictionary.GetGroupId(group3), dictionary.GetGroupId(group4) };
@@ -31,7 +31,7 @@ namespace Tests
 			List<float> group2 = [1, 1, 1, 3];
 			List<float> group3 = [1, 1, 2, 3];
 			List<float> group4 = [-1, -1, 2, 3];
-			ThresholdGroupedDictionary dictionary = new ThresholdGroupedDictionary(threshold);
+			ThresholdGroupedDictionary dictionary = new ThresholdGroupedDictionary(threshold, 0);
 
 			//Act
 			HashSet<int> groupIdSets = new HashSet<int>() { dictionary.GetGroupId(group1), dictionary.GetGroupId(group2), dictionary.GetGroupId(group3), dictionary.GetGroupId(group4) };
