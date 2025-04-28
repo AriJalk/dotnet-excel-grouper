@@ -2,5 +2,6 @@
   "worksheetName" : "Sheet1",
   "cellsRange" : "A1:C9",
   "headers" : ["Test1", "Test2", "Test3"],
-  "threshold" : 2
+  "threshold" : 2,
+  "processOption" : 0
 }

@@ -2,9 +2,8 @@
 
 using ClosedXML.Excel;
 using ExcelGrouper.DataStructures;
-using ExcelGrouper.Services;
 
-namespace ExcelGrouper
+namespace ExcelGrouper.Services
 {
 	internal class WorkbookHandler
 	{
@@ -21,7 +20,15 @@ namespace ExcelGrouper
 			wb.TryGetWorksheet(configuration.WorksheetName, out IXLWorksheet worksheet);
 			if (worksheet != null)
 			{
-				output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Threshold);
+				switch (configuration.ProcessOption)
+				{
+					case ExcelConfiguration.ProcessOptions.PARALLEL:
+						output = RangeGrouper.GetGroupsFromRangeParallel(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Threshold, configuration.Offset);
+						break;
+					case ExcelConfiguration.ProcessOptions.SYNCHRONOUS:
+						output = RangeGrouper.GetGroupsFromRange(worksheet.Range(configuration.CellsRange), configuration.Headers, configuration.Threshold, configuration.Offset);
+						break;
+				}
 			}
 			return output;
 		}

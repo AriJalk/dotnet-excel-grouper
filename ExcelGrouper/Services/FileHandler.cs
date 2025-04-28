@@ -20,9 +20,9 @@ namespace ExcelGrouper.Services
 		// Gets configuration from JsonFile
 		public static ExcelConfiguration? GetExcelConfiguration(string path)
 		{
-			ExcelConfiguration? configuration = null;
 			if (Path.Exists(path))
 			{
+				ExcelConfiguration? configuration = null;
 				using (StreamReader streamReader = new StreamReader(path))
 				{
 					string json = streamReader.ReadToEnd();
@@ -30,16 +30,24 @@ namespace ExcelGrouper.Services
 					{
 						PropertyNameCaseInsensitive = true,
 					};
-					configuration = JsonSerializer.Deserialize<ExcelConfiguration>(json, option);
+					try
+					{
+						configuration = JsonSerializer.Deserialize<ExcelConfiguration>(json, option);
+					}
+					catch(Exception ex)
+					{
+						Console.WriteLine(ex.Message);
+						return null;
+					}
 					if (configuration != null)
 					{
 						configuration.FileName = Path.GetFileNameWithoutExtension(path);
 						configuration.Directory = Path.GetDirectoryName(path);
 					}
 				}
+				return configuration;
 			}
-			return configuration;
-
+			throw new FileNotFoundException();
 		}
 
 		// Safer method to get context with nullable option if there's a problem

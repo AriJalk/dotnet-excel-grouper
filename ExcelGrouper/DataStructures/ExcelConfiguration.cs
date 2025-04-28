@@ -4,6 +4,11 @@ namespace ExcelGrouper
 {
 	internal class ExcelConfiguration
 	{
+		public enum ProcessOptions
+		{
+			SYNCHRONOUS,
+			PARALLEL,
+		}
 		// Assigned by code
 		public string FileName { get; set; } = "";
 		// Assigned by code
@@ -19,6 +24,8 @@ namespace ExcelGrouper
 		public string CellsRange { get; set; }
 		public IEnumerable<string> Headers { get; set; }
 		public int Threshold { get; set; }
+		public int Offset { get; set; }
+		public ProcessOptions? ProcessOption {  get; set; }
 
 
 		public ExcelConfiguration() { }
