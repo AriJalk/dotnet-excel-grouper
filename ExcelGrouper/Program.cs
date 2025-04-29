@@ -9,6 +9,33 @@ namespace ExcelGrouper
 
 	internal class Program
 	{
+		static void Main(string[] args)
+		{
+			ExcelConfiguration? configuration = null;
+			string path;
+#if DEBUG
+			path = "D:/Users/Ariel/Downloads/Book1.json";
+#else
+			path = args[0];
+#endif
+			try
+			{
+				configuration = FileHandler.GetExcelConfiguration(path);
+				Process(path, configuration);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				return;
+			}
+			
+
+#if !DEBUG
+			Console.WriteLine("Press any key to exit");
+			Console.ReadKey();
+#endif
+		}
+
 
 		static void Process(string path, ExcelConfiguration? configuration)
 		{
@@ -38,33 +65,6 @@ namespace ExcelGrouper
 
 			string output = WorkbookHandler.ProcessWorkbook(context);
 			FileHandler.WriteFile($"{configuration.PathWithoutExtension}_{configuration.WorksheetName}.txt", output);
-		}
-
-		static void Main(string[] args)
-		{
-			ExcelConfiguration? configuration = null;
-			string path;
-#if DEBUG
-			path = "D:/Users/Ariel/Downloads/Book1.json";
-#else
-			path = args[0];
-#endif
-			try
-			{
-				configuration = FileHandler.GetExcelConfiguration(path);
-				Process(path, configuration);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				return;
-			}
-			
-
-#if !DEBUG
-			Console.WriteLine("Press any key to exit");
-			Console.ReadKey();
-#endif
 		}
 	}
 }

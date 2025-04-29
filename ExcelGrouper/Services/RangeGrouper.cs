@@ -11,6 +11,14 @@ namespace ExcelGrouper.Services
 {
 	public class RangeGrouper
 	{
+
+		/// <summary>
+		/// Get all active columns to be checked
+		/// </summary>
+		/// <param name="range"></param>
+		/// <param name="headers"></param>
+		/// <returns>List<int> of the matching columns</returns>
+		/// <exception cref="ArgumentException"></exception>
 		private static List<int> GetColumns(IXLRange range, IEnumerable<string> headers)
 		{
 			if (headers.Count() > range.ColumnCount())
@@ -36,11 +44,20 @@ namespace ExcelGrouper.Services
 
 			return columns;
 		}
-		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, int threshold, int offset)
+
+		/// <summary>
+		/// Sequential processing of xl range based on headers
+		/// </summary>
+		/// <param name="range">All rows including headers</param>
+		/// <param name="headers">Which header columns to include</param>
+		/// <param name="threshold">Max distance from value to be considered close enough</param>
+		/// <param name="offset">Group offset</param>
+		/// <returns>A string of all groups corelating to rows</returns>
+		public static string GetGroupsFromRange(IXLRange range, IEnumerable<string> headers, int threshold, int offset = 0)
 		{
 			StringBuilder outputBuilder = new StringBuilder();
 			ThresholdGroupedDictionary multiDictionary = new ThresholdGroupedDictionary(threshold, offset);
-			DateTime startTime = DateTime.Now;
+			//DateTime startTime = DateTime.Now;
 			for (int row = 2; row <= range.RowCount(); row++)
 			{
 				List<float> values = new List<float>();
@@ -49,24 +66,31 @@ namespace ExcelGrouper.Services
 				{
 					values.Add(rangeRow.Cell(column).GetValue<float>());
 				}
-				//Console.WriteLine($"Row {row - 1}");
 				outputBuilder.AppendLine(multiDictionary.GetGroupId(values).ToString());
 			}
 
 
 			string output = outputBuilder.ToString();
-			Console.WriteLine($"Sequential: {(DateTime.Now - startTime).TotalMilliseconds}ms");
+			//Console.WriteLine($"Sequential: {(DateTime.Now - startTime).TotalMilliseconds}ms");
 			return output;
 
 		}
 
-		public static string GetGroupsFromRangeParallel(IXLRange range, IEnumerable<string> headers, int threshold, int offset)
+		/// <summary>
+		/// Parallel processing of xl range based on headers
+		/// </summary>
+		/// <param name="range">All rows including headers</param>
+		/// <param name="headers">Which header columns to include</param>
+		/// <param name="threshold">Max distance from value to be considered close enough</param>
+		/// <param name="offset">Group offset</param>
+		/// <returns>A string of all groups corelating to rows</returns>
+		public static string GetGroupsFromRangeParallel(IXLRange range, IEnumerable<string> headers, int threshold, int offset = 0)
 		{
 			ThresholdGroupedDictionary multiDictionary = new ThresholdGroupedDictionary(threshold, offset);
 			Lock dictLock = new Lock();
 			string[] strings = new string[range.RowCount() - 1];
 			List<int> columns = GetColumns(range, headers);
-			DateTime startTime = DateTime.Now;
+			//DateTime startTime = DateTime.Now;
 
 			var partitioner = Partitioner.Create(2, range.RowCount() + 1);
 
@@ -102,7 +126,7 @@ namespace ExcelGrouper.Services
 			}
 
 			string output = outputBuilder.ToString();
-			Console.WriteLine($"Parallel: {(DateTime.Now - startTime).TotalMilliseconds}ms");
+			//Console.WriteLine($"Parallel: {(DateTime.Now - startTime).TotalMilliseconds}ms");
 			return output;
 		}
 

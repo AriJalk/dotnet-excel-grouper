@@ -7,7 +7,11 @@ namespace ExcelGrouper.Services
 {
 	internal class WorkbookHandler
 	{
-
+		/// <summary>
+		/// Entrypoint to the functionality of the program
+		/// </summary>
+		/// <param name="context"></param>
+		/// <returns>A string of all groupId values corelating to rows</returns>
 		public static string ProcessWorkbook(ExcelContext context)
 		{
 			using XLWorkbook wb = context.Workbook;
